@@ -1,0 +1,4 @@
+-cp src
+-m Main
+
+-neko sparrow2atlas.n
