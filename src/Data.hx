@@ -9,10 +9,10 @@ typedef SubTexture = {
 	y:Int,
 	width:Int,
 	height:Int,
-	frameX:Int,
-	frameY:Int,
-	frameWidth:Int,
-	frameHeight:Int,
+	?frameX:Int,
+	?frameY:Int,
+	?frameWidth:Int,
+	?frameHeight:Int,
 	rotated:Bool
 }
 
@@ -30,16 +30,16 @@ class Data {
 				y: Std.parseInt(st.get('y')),
 				width: Std.parseInt(st.get('width')),
 				height: Std.parseInt(st.get('height')),
-				frameX: 0,
-				frameY: 0,
-				frameWidth: 0,
-				frameHeight: 0,
 				rotated: st.exists('rotated') && st.get('rotated') == 'true'
 			}
-			if (st.exists('frameX')) subTex.frameX = Std.parseInt(st.get('frameX'));
-			if (st.exists('frameY')) subTex.frameY = Std.parseInt(st.get('frameY'));
-			if (st.exists('frameWidth')) subTex.frameWidth = Std.parseInt(st.get('frameWidth'));
-			if (st.exists('frameHeight')) subTex.frameWidth = Std.parseInt(st.get('frameHeight'));
+
+			if (st.exists('frameX')) {
+				subTex.frameX = Std.parseInt(st.get('frameX'));
+				subTex.frameY = Std.parseInt(st.get('frameY'));
+
+				subTex.frameWidth = Std.parseInt(st.get('frameWidth'));
+				subTex.frameHeight = Std.parseInt(st.get('frameHeight'));
+			}
 		
 			texAtlas.subTextures.push(subTex);
 		}

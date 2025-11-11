@@ -24,28 +24,74 @@ function main() {
 		return;
 	}
 
-	final texAtlas:TextureAtlas = Data.extract(ta);
+	final atlas:TextureAtlas = Data.extract(ta);
 	
 	final b:StringBuf = new StringBuf();
 
-	b.add('${texAtlas.imagePath}\n');
+	b.add(atlas.imagePath);
+	b.addChar('\n'.code);
+
 	b.add('format: RGBA8888\n');
 	b.add('filter: Linear,Linear\n');
 	b.add('repeat: none\n');
 
-	for (subTex in texAtlas.subTextures) {
-		final name:String = subTex.name.substring(0, subTex.name.length - 4);
-		final index:Int = Std.parseInt(subTex.name.substring(subTex.name.length - 4));
+	for (subtex in atlas.subTextures) {
+		final name:String = subtex.name.substring(0, subtex.name.length - 4);
+		final index:Int = Std.parseInt(subtex.name.substring(subtex.name.length - 4));
 
-		b.add(name); // remove digits
-		b.add('\trotate: ${subTex.rotated}\n');
-		b.add('\txy: ${subTex.x},${subTex.y}\n');
-		b.add('\tsize: ${subTex.width},${subTex.height}\n');
-		if (subTex.frameX != 0 || subTex.frameY != 0)
-			b.add('\toffset: ${-subTex.frameX},${-subTex.frameY}\n');
-		if (subTex.frameWidth != 0 || subTex.frameWidth != 0)
-			b.add('\torig: ${subTex.frameWidth},${subTex.frameHeight}\n');
-		b.add('\tindex: $index\n');
+		b.add(name);
+		b.addChar('\n'.code);
+
+		b.add('\trotate: ');
+		b.add(subtex.rotated);
+		b.addChar('\n'.code);
+
+		b.add('\txy: ');
+		b.add(subtex.x);
+		b.addChar(','.code);
+		b.add(subtex.y);
+		b.addChar('\n'.code);
+
+		b.add('\tsize: ');
+		b.add(subtex.width);
+		b.addChar(','.code);
+		b.add(subtex.height);
+		b.addChar('\n'.code);
+
+		final trimmed:Bool = subtex.frameX != null;
+
+		if (trimmed) {
+			final offsetX:Float = -subtex.frameX;
+    	final offsetY:Float = subtex.frameHeight - subtex.height + subtex.frameY;
+
+			b.add('\toffset: ');
+			b.add(offsetX);
+			b.addChar(','.code);
+			b.add(offsetY);
+			b.addChar('\n'.code);
+
+			b.add('\torig: ');
+			b.add(subtex.frameWidth);
+			b.addChar(','.code);
+			b.add(subtex.frameHeight);
+			b.addChar('\n'.code);
+		} else {
+			final offsetY:Float = -subtex.height;
+
+			b.add('\toffset: 0,');
+			b.add(offsetY);
+			b.addChar('\n'.code);
+
+			b.add('\torig: ');
+			b.add(subtex.frameWidth);
+			b.addChar(','.code);
+			b.add(subtex.frameHeight);
+			b.addChar('\n'.code);
+		}
+
+		b.add('\tindex: ');
+		b.add(index);
+		b.addChar('\n'.code);
 	}
 
 	final newPath:String = Path.withoutExtension(path) + '.atlas';

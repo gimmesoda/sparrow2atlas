@@ -1,15 +1,9 @@
 # sparrow2atlas
 
-Neko script for converting sparrow atlases to gdx format
-
-## Compilation
-
-```sh
-haxe build.hxml
-```
+Haxe script for converting sparrow atlases to gdx format
 
 ## Usage
 
 ```sh
-neko sparrow2atlas.n <xmlpath>
+haxe convert.hxml <xmlpath>
 ```
