@@ -76,16 +76,9 @@ function main() {
 			b.add(subtex.frameHeight);
 			b.addChar('\n'.code);
 		} else {
-			final offsetY:Float = -subtex.height;
-
-			b.add('\toffset: 0,');
-			b.add(offsetY);
-			b.addChar('\n'.code);
-
-			b.add('\torig: ');
-			b.add(subtex.frameWidth);
-			b.addChar(','.code);
-			b.add(subtex.frameHeight);
+			b.add('\toffset: ');
+			b.add(-subtex.width >> 1);
+			b.add(',0');
 			b.addChar('\n'.code);
 		}
 
